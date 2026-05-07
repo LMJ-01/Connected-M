@@ -1,0 +1,188 @@
+/* SearchResult.css */
+
+.search-result-container {
+  display: flex;
+  max-width: 1400px;
+  /* 왼쪽으로 더 이동시키기 위해 왼쪽 마진을 줄임 */
+  margin: 120px auto; 
+  padding: 0;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.search-sidebar {
+  width: 200px; 
+  min-width: 200px; 
+  
+  position: sticky;
+  top: 100px; 
+  height: fit-content; 
+}
+
+.sidebar-card {
+  border: 1px solid #e3e3e3;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.sidebar-title {
+  background: #4b0082;
+  color: #fff;
+  padding: 20px;
+  margin: 0;
+  font-size: 18px;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  padding: 16.5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.category-list li:hover {
+  background-color: #f1f1f1;
+}
+
+.category-list li.active {
+  background-color: rgba(1, 180, 228, 0.1);
+  color: #01b4e4;
+  font-weight: bold;
+}
+
+.genre-count {
+  background: #eee;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+/* 본문 영역 */
+.search-content-area {
+  flex-grow: 1;
+}
+
+.search-query-title {
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.search-query-title span {
+  color: #4b0082
+}
+
+.search-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.search-result-card {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 140px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+
+
+.search-result-card:hover {
+  transform: translateY(-2px);
+}
+
+.search-poster-box {
+  width: 110px;
+  min-width: 110px;
+}
+
+.search-poster-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-info-box {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-movie-title {
+  color: #333;
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.search-movie-overview {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 페이지네이션 스타일 */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+  padding-bottom: 50px;
+}
+
+.pagination-wrapper button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  
+
+}
+
+.pagination-wrapper button:hover:not(:disabled) {
+  background: #01b4e4;
+  color: white;
+  border-color: #01b4e4;
+}
+
+.pagination-wrapper button:disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+.page-indicator {
+  font-size: 16px;
+  color: #555;
+}
+
+.no-result-message {
+  padding: 50px 0;
+  text-align: center;
+}
+

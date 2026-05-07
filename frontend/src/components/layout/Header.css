@@ -1,0 +1,205 @@
+/* Header.css */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #4b0082; /* 사진의 진보라색 */
+  z-index: 9000;
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo-img {
+  height: 0px;
+  display: block;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+}
+
+/* "키워드" 같은 단일 링크용 스타일 추가 */
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* 🎯 드롭다운의 부모 (카테고리 + 부분) */
+.category-parent {
+  position: relative; 
+  padding: 15px 0 !important; /* 위아래 간격을 균형 있게 조정 */
+  cursor: pointer;
+}
+
+.category-title {
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 🎯 핵심: 사진 속 하얀 박스 (장르 드롭다운 기준) */
+.category-dropdown {
+  display: none !important; 
+  position: absolute;
+  
+  /* 박스를 글자에서 적당히 떨어뜨립니다 (디자인 개선) */
+  top: 130% !important; 
+  left: -120px !important; 
+  
+  background: white !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  gap: 20px 30px !important;
+  min-width: 800px !important;
+
+  /* 글자가 너무 위로 붙지 않도록 패딩을 적절히 줍니다 */
+  padding: 30px !important; 
+  
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+}
+
+.category-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* 박스 위로 투명한 영역을 만들어 글자와 연결합니다 */
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+}
+
+/* 🎯 핵심: 부모 요소(category-parent)에 마우스를 올렸을 때만 'grid'로 보여줍니다 */
+.category-parent:hover .category-dropdown {
+  display: grid !important;
+}
+
+/* 세로 줄(열) 스타일 (기존 코드 유지) */
+.dropdown-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+}
+
+/* 장르 글자 스타일 */
+.category-dropdown p {
+  font-size: 14px !important;
+  color: #0f0f0f !important; /* 폰트 색상 중복 선언 정리 */
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-weight: 500 !important; 
+}
+
+.category-dropdown p:hover {
+  color: #4b0082 !important; /* 호버 시 사이트 메인 컬러로 포인트! */
+  font-weight: 700 !important;
+  transform: translateX(3px); 
+}
+
+
+/* =========================================
+  🚀 새로 추가된 OTT 드롭다운 & 아이콘 전용 스타일 🚀 
+   ========================================= */
+
+/* OTT 메뉴는 800px가 아니라 이미지 5개 너비에 딱 맞게 덮어쓰기! */
+.category-dropdown.ott-dropdown {
+  min-width: max-content !important; /* 800px 강제 해제 */
+  left: -40px !important; /* OTT 글자 위치에 맞게 중앙 정렬 */
+  grid-template-columns: repeat(5, 1fr) !important; /* 쿠팡이 빠져서 로고가 5개이므로 5칸! */
+  gap: 15px !important; 
+  padding: 25px !important; /* 이미지 박스에 맞게 패딩 살짝 축소 */
+}
+
+/* 둥글고 예쁜 OTT 로고 이미지 디자인 */
+.ott-logo-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px; /* 앱 아이콘처럼 둥근 테두리 */
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
+}
+
+/* 마우스 올렸을 때 로고가 통통 튀어오르는 애니메이션 */
+.ott-logo-btn:hover {
+  transform: scale(1.15) translateY(-5px);
+  box-shadow: 0 8px 16px rgba(75, 0, 130, 0.3); /* 보라색 그림자 포인트 */
+}
+
+/* ========================================= */
+
+/* 헤더 오른쪽 & 버튼들 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-input {
+  background: #f3f4f6;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  width: 200px;
+  font-size: 14px;
+}
+
+.user-nickname {
+  color: white;
+  font-size: 15px;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-brand {
+  background: white;
+  color: #4b0082;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}

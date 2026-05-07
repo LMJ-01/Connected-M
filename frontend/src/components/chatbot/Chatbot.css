@@ -1,0 +1,228 @@
+/* 1. 폰트 불러오기 (CSS 파일 최상단에 위치해야 함) */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap');
+
+/* 2. 전체 요소에 폰트 적용 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 모든 요소에 Pretendard 적용, 없을 경우 샌세리프 계열 사용 */
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+/* 3. input, button 등 기본 폰트가 상속되지 않는 요소들까지 강제 적용 */
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+/* ================= 챗봇 토글 버튼 ================= */
+.chatbot-toggle {
+  /* 위치 및 고정 */
+  position: fixed; 
+  bottom: 30px; 
+  z-index: 2000;
+  right: 30px; 
+
+  /* 크기 및 모양 */
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+
+  /* 배경 및 색상 */
+  background: linear-gradient(135deg, #4b0082 0%, #6a1b9a 100%);
+  color: white;
+
+  /* 내부 요소 정렬 */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+
+  /* 인터렉션 요소 */
+  cursor: pointer; 
+  box-shadow: 0 8px 24px rgba(75, 0, 130, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 마우스 호버 효과 */
+.chatbot-toggle:hover { 
+  transform: scale(1.1) rotate(5deg); 
+}
+
+/* ================= 챗봇 모달 내부 디자인 ================= */
+.chatbot-modal {
+  /* 위치 및 고정 */
+  position: fixed;
+  bottom: 110px;
+  right: 30px;
+  z-index: 99999;
+
+  /* 크기 및 모양 */
+  width: 420px; 
+  height: 600px;
+  border-radius: 28px; 
+
+  /* 배경 및 색상 */
+  background: #ffffff;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+
+  /* 내부 요소 정렬 */
+  display: flex;
+  flex-direction: column;
+
+  /* 상태 선언 */
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* 인터렉션 요소 */
+  animation: chatAppear 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 애니메이션 요소 */
+@keyframes chatAppear {
+  from { opacity: 0; transform: translateY(30px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 헤더: 투명도 있는 화이트 텍스트와 그림자 */
+.chat-header {
+  background: linear-gradient(135deg, #4b0082 0%, #6a1b9a 100%);
+  color: white;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+}
+
+/* 누락되었던 X 버튼 (닫기 버튼) 디자인 */
+.chat-close-btn {
+  background: rgba(255, 255, 255, 0.15); 
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 16px; 
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-close-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.1);
+}
+
+/* 바디: 부드러운 스크롤과 배경색 */
+.chat-body {
+  flex: 1;
+  background: #f8f9fa; 
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 스크롤바 디자인 추가 */
+.chat-body::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-body::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+/* 메시지 공통 */
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  position: relative;
+}
+
+/* 봇 메시지: 화이트 카드 느낌 */
+.bot-msg {
+  background: white;
+  color: #333;
+  align-self: flex-start;
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f0f0f0;
+}
+
+/* 사용자 메시지: 보라색 강조 */
+.user-msg {
+  background: #4b0082;
+  color: white;
+  align-self: flex-end;
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: 0 4px 12px rgba(75, 0, 130, 0.2);
+}
+
+/* 입력 영역: 알약 모양 디자인 */
+.chat-input-area {
+  padding: 16px 20px;
+  background: white;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center; 
+  gap: 12px;
+}
+
+/* ================= 입력창 (글자색 진하게 수정) ================= */
+.chat-input-field {
+  flex: 1;
+  background: #f1f3f5;
+  color: #111111; 
+  border: none;
+  border-radius: 24px;
+  padding: 12px 18px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.chat-input-field:focus {
+  background: white;
+  box-shadow: 0 0 0 2px rgba(75, 0, 130, 0.2);
+}
+
+/* ================= 전송 버튼 (가로 정렬 & 크기 확보) ================= */
+.chat-send-btn {
+  background: #4b0082;
+  color: white;
+  border: none;
+  
+  width: 52px;  
+  height: 52px; 
+  min-width: 52px; 
+  flex-shrink: 0; 
+  border-radius: 50%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap; 
+  font-size: 14px; 
+  letter-spacing: 1px; 
+  padding: 0; 
+  
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(75, 0, 130, 0.3);
+}

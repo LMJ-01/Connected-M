@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+input, input::placeholder {
+  color: #111827; 
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: white;
+  width: 420px;
+  padding: 40px;
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  margin-top: 80px;
+}
+.close-btn { 
+  position: absolute; 
+  top: 20px; 
+  right: 20px; 
+  background: none; 
+  border: none; 
+  font-size: 20px; 
+  color: #9ca3af; 
+  cursor: pointer; 
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+} 
+
+.modal-header p { 
+  color: #9ca3af; 
+  font-weight: 700; 
+  font-size: 13px; 
+}
+
+/* ============== input-group ============== */
+.input-group_login_modal { 
+  margin-bottom: 16px; 
+}
+
+.input-group_login_modal label { 
+  display: block; 
+  font-size: 11px; 
+  font-weight: 900; 
+  color: #9ca3af; 
+  margin-bottom: 6px; 
+  margin-left: 10px; 
+}
+
+.input-group_login_modal input { 
+  width: 100%; 
+  padding: 14px 20px; 
+  background-color: #f9fafb; 
+  border: 1px solid #eee; 
+  border-radius: 15px; 
+  font-size: 14px; 
+  outline: none; 
+  transition: border 0.2s; 
+}
+
+.input-group_login_modal input:focus { 
+  border-color: #4b0082; 
+  background-color: white; 
+}
+
+/* submit-btn */
+.submit-btn { 
+  width: 100%; 
+  padding: 16px; 
+  background-color: #4b0082; 
+  color: white; 
+  border: none; 
+  border-radius: 15px; 
+  font-size: 15px; 
+  font-weight: 900; 
+  cursor: pointer; 
+  margin-top: 10px; 
+  transition: background 0.2s; 
+}
+
+.submit-btn:hover { 
+  background-color: #6a1b9a; 
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 12px;
+  background-color: #f3f4f6;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.secondary-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.modal-links { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 15px; 
+  margin-top: 20px; 
+  font-size: 12px; 
+  font-weight: 700; 
+}
+
+.modal-links a { 
+  color: #9ca3af; 
+  text-decoration: none; 
+}
+
+.modal-links .divider { 
+  color: #e5e7eb; 
+}
+
+/* social-login */
+.social-login-section { 
+  margin-top: 25px; 
+  padding-top: 25px; 
+  border-top: 1px solid #f3f4f6; 
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  gap: 10px; 
+}
+
+.social-btn { 
+  flex: 1; 
+  padding: 14px 0; 
+  border-radius: 15px; 
+  font-size: 13px; 
+  font-weight: 800; 
+  cursor: pointer; 
+  border: none; 
+  transition: filter 0.2s; 
+}
+
+.btn-kakao { background-color: #FEE500; color: #191919; }
+.btn-google { background-color: #ffffff; color: #3f3f3f; border: 1px solid #e5e7eb; }
+
+.login_modal_logo-img {
+  height: 150px !important;
+  width: auto;
+  display: block;
+  margin: 0 auto 0px auto;
+  object-fit: contain;
+}

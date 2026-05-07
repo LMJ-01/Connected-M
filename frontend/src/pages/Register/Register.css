@@ -1,0 +1,116 @@
+/* 1. 폰트 불러오기 (CSS 파일 최상단에 위치해야 함) */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap');
+
+/* 2. 전체 요소에 폰트 적용 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 모든 요소에 Pretendard 적용, 없을 경우 샌세리프 계열 사용 */
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+/* 3. input, button 등 기본 폰트가 상속되지 않는 요소들까지 강제 적용 */
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 40px 20px;
+}
+
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  padding: 25px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  margin-top: 100px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.input-group input {
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333 !important; 
+  background-color: #ffffff;
+  transition: all 0.2s;
+}
+
+/* 브라우저 자동완성 시 글자가 안 보이는 현상 방지 */
+.input-group input:-webkit-autofill,
+.input-group input:-webkit-autofill:hover, 
+.input-group input:-webkit-autofill:focus, 
+.input-group input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.input-group input:focus {
+  border-color: #4b0082;
+  color: #000;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(75, 0, 130, 0.1);
+}
+
+.btn-submit {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #4b0082;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+}
+
+.login-link {
+  color: #4b0082;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+}

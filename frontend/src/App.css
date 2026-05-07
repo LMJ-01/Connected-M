@@ -1,0 +1,24 @@
+/* 1. 폰트 불러오기 (CSS 파일 최상단에 위치해야 함) */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap');
+
+* {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif !important;
+}
+
+input, button, textarea, select {
+  font-family: 'Pretendard', sans-serif;
+}
+
+
+button {
+    outline: none !important;
+    border: none !important;
+}
+
+:root {
+    --main-font: 'Your Font Name', sans-serif;
+}
+
+body {
+    font-family: var(--main-font);
+}

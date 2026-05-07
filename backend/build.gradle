@@ -1,0 +1,64 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4' // 👈 [수정] SNAPSHOT 대신 검증된 안정 버전!
+	id 'io.spring.dependency-management' version '1.1.4' // 👈 [수정] 관리 도구 버전 최적화
+}
+
+group = 'com.Connectedm'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	// [수정] 스냅샷 저장소는 이제 필요 없으므로 제거해도 됩니다 ㅋ
+}
+
+dependencies {
+	// 1. Spring Boot Starter
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // 👈 항해사 영입 완료! ㅋ
+
+	// 2. Database
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	// 3. Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// 4. OAuth2 & JWT
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// 5. Swagger (SpringDoc)
+	// [수정] 부트 3.2.x와 가장 찰떡궁합인 2.3.0으로 상향! ㅋㅋㅋㅋ
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+	// 6. Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// 이메일 발송 기능을 위한 라이브러리 추가
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

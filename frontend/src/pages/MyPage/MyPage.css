@@ -1,0 +1,289 @@
+:root {
+  --main-purple: #4b0082;
+  --bg-gray: #f9fafb;
+  --text-gray: #9ca3af;
+  --border-light: #e5e7eb;
+}
+
+.mypage-layout-mypage {
+  background-color: var(--bg-gray);
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 60px;
+}
+
+.mypage-container-mypage {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+.profile-summary-card-mypage {
+  background: white;
+  border: 2px solid var(--main-purple);
+  border-radius: 25px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+
+.us-pro-mypage {
+  display: flex;
+  align-items: center;
+}
+
+.profile-avatar-mypage {
+  width: 65px; height: 65px;
+  background-color: var(--main-purple);
+  color: white;
+  border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 24px; font-weight: bold;
+  margin-right: 20px;
+}
+
+.user-nickname-mypage { font-size: 22px; font-weight: 800; }
+.user-welcome-msg-mypage { color: var(--text-gray); font-size: 14px; }
+
+.mypage-content-grid-mypage {
+  display: flex;
+  gap: 30px;
+}
+
+.content-side-left-mypage { flex: 0.8; }
+
+.info-card-fixed-mypage {
+  background: white;
+  border: 2px solid var(--main-purple);
+  border-radius: 25px;
+  padding: 30px;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-title-fixed-mypage { font-size: 18px; font-weight: 800; margin-bottom: 25px; }
+
+.info-row-fixed-mypage {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.info-label-fixed-mypage { color: var(--text-gray); font-weight: 600; }
+.info-value-fixed-mypage { font-weight: 500; }
+
+/* 버튼 스타일 (빨간 원 위치 적용) */
+.btn-edit-action-mypage {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-admin-action-mypage {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4b0082;
+  color: #fff;
+}
+
+.btn-edit-action-mypage {
+  background-color: var(--main-purple);
+  color: white;
+  margin-top: auto; /* 버튼들을 하단으로 배치 */
+}
+
+.btn-edit-action-mypage:hover { background-color: #3b0066; }
+.btn-admin-action-mypage:hover { background-color: #3b0066; }
+
+.content-side-right-mypage {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.simple-link-card-mypage {
+  background: white;
+  border: 2px solid var(--main-purple);
+  border-radius: 20px;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.simple-link-card-mypage:hover { 
+  transform: translateY(-3px); 
+}
+
+
+.link-title-mypage { 
+  font-size: 17px; font-weight: 700; }
+
+.link-arrow-mypage { 
+  color: var(--main-purple); font-weight: bold; }
+
+.mypage-footer-mypage {
+  margin-top: 40px;
+  
+  /* 1. 가운데 정렬을 풀고 왼쪽으로 밀기 */
+  margin-left: 240px; 
+  margin-right: 150px;
+  
+  /* 2. '내 정보' 박스(flex: 0.8)의 너비와 비슷하게 맞추기 */
+  /* 전체 1100px 중 0.8 비율만큼의 너비를 할당합니다. */
+  width: 440px; 
+  
+  display: flex;
+  /* 3. 그 440px 안에서 버튼들을 가운데 정렬하면 박스랑 딱 맞아요! */
+  justify-content: center; 
+  align-items: center;
+  gap: 15px;
+}
+
+
+.delete-account-link-mypage{
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  display: block;       /* 한 줄을 다 차지하게 해서 */
+  width: 100%;          /* 부모 박스 끝까지 영역을 잡고 */
+  text-align: right;    /* 글자를 오른쪽 끝으로 밀어줍니다 */
+  margin-top: 10px;     /* 정보 수정 버튼과의 간격 */
+  padding-right: 5px;
+}
+
+.delete-account-link-mypage:hover {
+  color: #ff4d4f; /* 탈퇴 버튼 마우스 올리면 빨간색 */
+}
+
+.footer-separator-mypage {
+  color: var(--border-light);
+  font-size: 12px;
+}
+
+/* 최근에 본 목록: 위는 줄이고(내리고) 아래를 늘리기 */
+.recent-item {
+  height: 90px;        /* 아래로 늘어나도록 높이를 더 키웠습니다 */
+  margin-top: 5px;    /* 플러스 마진을 주면 위쪽 라인이 아래로 내려오며 줄어듭니다 */
+  display: flex;
+  align-items: center; /* 글자는 중앙 유지 */
+  position: relative;
+  z-index: 1;
+}
+.wish-item {
+  height: 95px;        /* 기본보다 약 10~15px 정도만 키운 값입니다. */
+  margin-top: -18px;    /* 위로 살짝 끌어올려 위쪽 확장을 만듭니다. */
+  display: flex;
+  align-items: center; /* 글자는 세로 가운데 고정! */
+  position: relative;
+  z-index: 1;
+}
+
+
+/* '내가 작성한 리뷰' 칸을 위로 늘리기 */
+.review-item {
+  height: 90px;       /* 원하는 만큼 높이를 키우세요 */
+  margin-top: -15px;   /* 마이너스 마진을 주면 박스가 위로 쑥 올라갑니다! */
+  display: flex;
+  align-items: center; /* 글자는 여전히 정중앙에 */
+  position: relative;  /* 레이아웃이 꼬이지 않게 보호 */
+  z-index: 1;          /* 다른 요소보다 살짝 위에 보이게 */
+}
+
+/* ... 기존 스타일 유지 ... */
+
+/* [추가] 회원탈퇴 모달 전체 배경 (어둡게 처리) */
+/* [수정] 모달 전체 배경 (오버레이) */
+.modal-overlay-mypage {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 배경을 조금 더 투명하게 해서 조화롭게 변경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* [수정] 모달 박스 - 흰색 배경과 보라색 테두리 적용 */
+.modal-content-mypage {
+  
+  background-color: #ffffff; /* 배경을 흰색으로 변경 */
+  color: #000000;            /* 기본 글자색 검정 */
+  padding: 35px;
+  border: 2px solid var(--main-purple); /* 마이페이지 메인 보라색 테두리 추가 */
+  border-radius: 25px;       /* 다른 카드들과 일관된 둥근 모서리 */
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* 그림자를 부드럽게 변경 */
+}
+
+/* [수정] 모달 제목 */
+.modal-header-mypage {
+  font-size: 20px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* [수정] 모달 설명 문구 */
+.modal-body-mypage {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4b4b4b; /* 진한 회색으로 가독성 향상 */
+  margin-bottom: 30px;
+}
+
+/* [수정] 버튼 스타일 - 마이페이지 테마에 맞춤 */
+.modal-footer-mypage {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* 확인 버튼 - 보라색 배경 */
+.btn-confirm-mypage {
+  background-color: var(--main-purple);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* 취소 버튼 - 연한 회색 배경 */
+.btn-cancel-mypage {
+  background-color: #e5e7eb;
+  color: #4b5563;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-confirm-mypage:hover { background-color: #3b0066; }
+.btn-cancel-mypage:hover { background-color: #d1d5db; }
