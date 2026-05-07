@@ -31,8 +31,8 @@ const RecentPage: React.FC = () => {
 
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/users/recent', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/recent`, {
+            headers: { Authorization: `Bearer ${token}` }
         });
         if (response.data) {
           setRecentList(response.data);

@@ -40,7 +40,7 @@ const OttPage: React.FC = () => {
       if (!providerName) return;
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/contents/ott/${providerName}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/ott/${providerName}`);
         if (response.data && response.data.data) {
           setMovies(response.data.data);
         } else {

@@ -23,7 +23,7 @@ const GenrePage: React.FC = () => {
       try {
         setLoading(true);
         // 방금 만든 백엔드 API 호출!
-        const response = await axios.get(`http://localhost:8080/api/contents/genre/${genreName}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/genre/${genreName}`);
         
         // ApiResponse 구조 (data 안에 실제 배열이 있음)
         if (response.data && response.data.data) {

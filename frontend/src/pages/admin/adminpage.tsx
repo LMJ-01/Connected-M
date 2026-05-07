@@ -33,7 +33,7 @@ const AdminPage = () => {
         }
 
         const token = localStorage.getItem('token'); 
-        const response = await axios.get('http://localhost:8080/api/admin/users', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const userDataList = response.data.content || []; 
@@ -50,8 +50,8 @@ const AdminPage = () => {
       const fetchReportedReviews = async () => {
         try {
           const token = localStorage.getItem('token');
-          const response = await axios.get('http://localhost:8080/api/admin/reviews/reported', {
-            headers: { Authorization: `Bearer ${token}` }
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/reviews/reported`, {
+              headers: { Authorization: `Bearer ${token}` }
           });
           setReportedReviews(response.data || []);
         } catch (error) {
@@ -70,9 +70,9 @@ const AdminPage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:8080/api/admin/users/${userId}/status?status=${serverStatus}`, 
-        {}, 
-        { headers: { Authorization: `Bearer ${token}` } }
+      await axios.patch(`${import.meta.env.VITE_API_URL}/api/admin/users/${userId}/status?status=${serverStatus}`, 
+          {}, 
+          { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setUsers(prev => prev.map(u => u.userId === userId ? { ...u, status: serverStatus } : u));
@@ -87,9 +87,9 @@ const AdminPage = () => {
     if (window.confirm(`${user.nickname}님을 정말 탈퇴 처리하시겠습니까?`)) {
       try {
         const token = localStorage.getItem('token');
-        await axios.patch(`http://localhost:8080/api/user/${user.userId}/withdraw`, 
-          {}, 
-          { headers: { Authorization: `Bearer ${token}` } }
+        await axios.patch(`${import.meta.env.VITE_API_URL}/api/user/${user.userId}/withdraw`, 
+            {}, 
+            { headers: { Authorization: `Bearer ${token}` } }
         );
 
         setUsers(prev => prev.map(u => 

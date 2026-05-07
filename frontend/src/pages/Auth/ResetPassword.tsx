@@ -36,7 +36,7 @@ const ResetPassword = () => {
 
     try {
       // 인증된 토큰을 서버에 전달하여 비밀번호 변경 처리
-      await axios.post('http://localhost:8080/api/auth/password-reset/confirm', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/password-reset/confirm`, {
         token,
         newPassword: password
       });

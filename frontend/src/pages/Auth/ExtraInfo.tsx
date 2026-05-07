@@ -40,7 +40,7 @@ const ExtraInfo = () => {
       return false;
     }
     try {
-      const response = await axios.get('http://localhost:8080/api/user/check-nickname', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/check-nickname`, {
         params: { nickname: nickname.trim() }
       });
       const exists = response.data.data;
@@ -112,7 +112,7 @@ const ExtraInfo = () => {
         requestData.nickname = formData.nickname.trim();
       }
 
-      const response = await axios.put('http://localhost:8080/api/user/update-extra-info', requestData, {
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/user/update-extra-info`, requestData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

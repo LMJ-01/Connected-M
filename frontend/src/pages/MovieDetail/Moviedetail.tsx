@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar, FaRegStar, FaStarHalfAlt, FaBookmark, FaRegBookmark, FaChevronLeft, FaChevronRight, FaEdit, FaTrashAlt, FaCheck, FaTimes } from 'react-icons/fa';
-import './Moviedetail.css';
+import './MovieDetail.css';
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
 import { PiSirenFill } from "react-icons/pi";
@@ -67,7 +67,8 @@ const MovieDetail: React.FC = () => {
     if (name.length === 2) return name[0] + "*";
     return name[0] + "*".repeat(name.length - 2) + name.slice(-1);
   };
-  
+  // [추가] 기타 사유를 직접 입력받기 위한 상태입니다.
+  const [etcReason, setEtcReason] = useState<string>('');
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<MovieDetailData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,7 +86,7 @@ const MovieDetail: React.FC = () => {
     { value: 'INAPPROPRIATE_CONTENT', label: '부적절한 내용' },
     { value: 'ABUSIVE_LANGUAGE', label: '욕설 비하발언' },
     { value: 'SPOILER', label: '스포일러 포함' },
-    { value: 'OTHER', label: '기타 사유' },
+    { value: 'OTHER', label: '상세 신고내용' },
   ];
 
   const [selectedReviewData, setSelectedReviewData] = useState<{
@@ -99,29 +100,40 @@ const MovieDetail: React.FC = () => {
     setIsReportModalOpen(true);
   };
 
-  const handleReportSubmit = async () => {
-    if (!reportReason) { alert("사유를 선택해주세요."); return; }
+const handleReportSubmit = async () => {
+  if (!reportReason) {
+    alert("신고 사유를 선택해주세요.");
+    return;
+  }
 
-    const reportData = {
-      reviewId: selectedReviewId,
-      targetNickname: selectedReviewData?.nickname, 
-      reason: reportReason,                         
-      reviewText: selectedReviewData?.comment,      
-      reporterNickname: userNickname                
-    };
-
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8080/api/reports', reportData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      alert("신고가 정상적으로 접수되었습니다.");
-      setIsReportModalOpen(false);
-      setReportReason('');
-    } catch (error) {
-      alert("신고 접수 중 오류가 발생했습니다.");
-    }
+  // 🚩 [핵심] 백엔드 ReviewReportRequestDto의 필드명과 100% 일치시키기
+  const reportData = {
+    // 왼쪽은 백엔드 DTO 이름인 'reason', 오른쪽은 우리가 선택한 값(SPAM 등)
+    reason: reportReason, 
+    // 왼쪽은 백엔드 DTO 이름인 'detailReason', 오른쪽은 우리가 쓴 글
+    detailReason: etcReason || "" 
   };
+
+  try {
+    const token = localStorage.getItem('token');
+    
+    // 로그상 /api/reports/80 주소는 서버가 잘 받아주고 있습니다.
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/reports`, reportData, {
+      headers: { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    alert("신고가 정상적으로 접수되었습니다.");
+    setIsReportModalOpen(false);
+    setReportReason('');
+    setEtcReason('');
+  } catch (error: any) {
+    console.error("전송 실패 사유:", error.response?.data || error.message);
+    alert("신고 처리 중 오류가 발생했습니다.");
+  }
+};
 
   const [hasLoggedRecentView, setHasLoggedRecentView] = useState<boolean>(false);
 
@@ -172,7 +184,7 @@ const MovieDetail: React.FC = () => {
         setLoading(true);
         const token = localStorage.getItem('token'); 
 
-        const response = await fetch(`http://localhost:8080/api/contents/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/${id}`);
         const result = await response.json();
 
         if (result && result.data) {
@@ -187,7 +199,7 @@ const MovieDetail: React.FC = () => {
             setHasReviewed(data.userReviews?.some((r: any) => r.nickname === userNickname) ?? false);
             
             if (token) {
-              const wishRes = await axios.get('http://localhost:8080/api/members/wishlist', {
+              const wishRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/members/wishlist`, {
                 headers: { Authorization: `Bearer ${token}` }
               });
               const isWished = wishRes.data?.some((w: any) => w.contentId === Number(id)) ?? false;
@@ -197,7 +209,7 @@ const MovieDetail: React.FC = () => {
 
           if (isLoggedIn && token && !hasLoggedRecentView) {
             setHasLoggedRecentView(true);
-            axios.post(`http://localhost:8080/api/users/recent/${id}`, {}, {
+            axios.post(`${import.meta.env.VITE_API_URL}/api/users/recent/${id}`, {}, {
               headers: { Authorization: `Bearer ${token}` }
             })
             .then(() => console.log("최근 본 목록 저장 성공"))
@@ -223,7 +235,7 @@ const MovieDetail: React.FC = () => {
     if (!isLoggedIn) { alert("로그인이 필요합니다."); return; }
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:8080/api/members/wishlist/${id}`, {}, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/members/wishlist/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setIsWishlisted(!isWishlisted);
@@ -237,7 +249,7 @@ const MovieDetail: React.FC = () => {
 
     try {
       const token = localStorage.getItem('token'); 
-      const response = await axios.post(`http://localhost:8080/api/contents/user-reviews?contentId=${id}`, 
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/contents/user-reviews?contentId=${id}`, 
         { rating: newRating.toString(), comment: newComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -253,7 +265,7 @@ const MovieDetail: React.FC = () => {
     if (!editDetailComment.trim()) { alert("내용을 입력해주세요."); return; }
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:8080/api/contents/user-reviews/${reviewId}`, 
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/contents/user-reviews/${reviewId}`, 
         { rating: editDetailRating.toString(), comment: editDetailComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -267,7 +279,7 @@ const MovieDetail: React.FC = () => {
     if (!window.confirm("리뷰를 삭제하시겠습니까?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:8080/api/contents/user-reviews/${reviewId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/contents/user-reviews/${reviewId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("리뷰가 삭제되었습니다.");
@@ -636,19 +648,37 @@ const MovieDetail: React.FC = () => {
               <div className="report-title-row">
                 <p className="report-guide">신고 사유를 선택해주세요.</p>
               </div>
-              <div className="report-options-grid">
-                {reportOptions.map((opt) => (
-                  <label key={opt.value} className="report-radio-label">
-                    <input 
-                      type="radio" 
-                      name="reportReason" 
-                      value={opt.value} 
-                      onChange={(e) => setReportReason(e.target.value)}
-                    />
-                    <span className="label-text">{opt.label}</span>
-                  </label>
-                ))}
-              </div>
+             <div className="report-options-grid">
+  {reportOptions.map((opt) => (
+    /* [포인트] OTHER일 때 항상 'is-expanded' 클래스를 주어 박스 형태를 유지합니다 */
+    <div key={opt.value} className={`report-option-wrapper ${opt.value === 'OTHER' ? 'is-expanded' : ''} ${reportReason === opt.value ? 'selected' : ''}`}>
+      <label className="report-radio-label">
+        <input
+          type="radio"
+          name="reportReason"
+          value={opt.value}
+          checked={reportReason === opt.value}
+          onChange={(e) => setReportReason(e.target.value)}
+          style={{ display: 'none' }} 
+        />
+        <span className="label-text">{opt.label}</span>
+      </label>
+
+      {/* [수정] 조건문을 빼서 항상 보이게 하되, OTHER 항목 안에만 위치시킵니다 */}
+      {opt.value === 'OTHER' && (
+        <div className="etc-reason-container">
+          <textarea
+            className="etc-textarea"
+            placeholder="필요시에 관리자가 참고할 수 있도록 상세한 사유를 적어주세요."
+            value={etcReason}
+            onChange={(e) => setEtcReason(e.target.value)}
+          />
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
             </div>
 
             <div className="modal-footer">

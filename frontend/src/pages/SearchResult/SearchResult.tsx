@@ -20,7 +20,7 @@ const SearchResult = () => {
       if (!query) return;
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/search?query=${encodeURIComponent(query)}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/search?query=${encodeURIComponent(query)}`);
         const result = await response.json();
         console.log("🚀 백엔드에서 온 데이터:", result);
         if (result.data) {

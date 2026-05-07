@@ -31,8 +31,9 @@ const KeywordPage: React.FC = () => {
 
         // 🚀 기존 fetch 로직 유지
         const [mainRes, aiRes] = await Promise.all([
-          fetch('http://localhost:8080/api/contents/all'),
-          fetch('http://localhost:8080/api/ai/keywords')
+          // 💡 작은따옴표(')를 백틱(`)으로 바꾸고 변수를 넣어주세요!
+          fetch(`${import.meta.env.VITE_API_URL}/api/contents/all`),
+          fetch(`${import.meta.env.VITE_API_URL}/api/ai/keywords`)
         ]);
 
         const mainJson = await mainRes.json();

@@ -43,7 +43,7 @@ const MyPage: React.FC = () => {
       setIsWithdrawing(true); 
 
       // 401 방지를 위해 헤더를 지독하게 체크하며 전송
-      await axios.patch(`http://localhost:8080/api/user/me/withdraw`, {}, {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/api/user/me/withdraw`, {}, {
         headers: {
           'Authorization': `Bearer ${token}` 
         }
@@ -111,7 +111,7 @@ const MyPage: React.FC = () => {
           setIsAdmin(true);
         }
         
-        const response = await axios.get(`http://localhost:8080/api/user/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/${userId}`);
         const serverUserData = response.data.data;
         setUser(serverUserData);
 

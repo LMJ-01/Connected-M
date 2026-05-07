@@ -54,8 +54,8 @@ const MyReviewsPage: React.FC = () => {
       }
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/api/user-reviews/me', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user-reviews/me`, {
+            headers: { Authorization: `Bearer ${token}` }
         });
         if (response.data && response.data.success) {
           const sortedData = [...response.data.data].sort((a, b) => {
@@ -95,9 +95,9 @@ const MyReviewsPage: React.FC = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`http://localhost:8080/api/contents/user-reviews/${reviewId}`, 
-        { comment: editContent, rating: editRating.toString() },
-        { headers: { Authorization: `Bearer ${token}` } }
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/contents/user-reviews/${reviewId}`, 
+          { comment: editContent, rating: editRating.toString() },
+          { headers: { Authorization: `Bearer ${token}` } }
       );
       if (response.data.success) {
         const updatedTime = new Date().toISOString();
@@ -119,8 +119,8 @@ const MyReviewsPage: React.FC = () => {
     if (!window.confirm("리뷰를 삭제하시겠습니까?")) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:8080/api/contents/user-reviews/${reviewId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/contents/user-reviews/${reviewId}`, {
+          headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data && response.data.success) {
         setReviews(reviews.filter(r => r.reviewId !== reviewId));
@@ -137,8 +137,8 @@ const MyReviewsPage: React.FC = () => {
     if (!window.confirm('정말로 모든 리뷰를 삭제하시겠습니까?')) return;
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.delete(`http://localhost:8080/api/user-reviews/me`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/user-reviews/me`, {
+          headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data.success) {
         setReviews([]);

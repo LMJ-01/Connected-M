@@ -86,8 +86,19 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
                         .failureHandler((request, response, exception) -> {
-                            // 프론트엔드 주소/oauth2/redirect?error=BANNED_USER 형식으로 리다이렉트
-                            response.sendRedirect("http://localhost:5173/oauth2/redirect?error=BANNED_USER");
+                            // 1. 요청이 어디서 왔는지 'Origin'이나 'Referer'를 확인합니다.
+                            String referer = request.getHeader("Referer");
+
+                            // 2. 기본값은 로컬로 설정해둡니다.
+                            String targetUrl = "http://localhost:5173";
+
+                            // 3. 만약 요청 주소에 'vercel.app'이 포함되어 있다면? 베셀로 주소를 바꿉니다!
+                            if (referer != null && referer.contains("connected-m.vercel.app")) {
+                                targetUrl = "https://connected-m.vercel.app";
+                            }
+
+                            // 4. 결정된 주소로 지독하게 리다이렉트!
+                            response.sendRedirect(targetUrl + "/oauth2/redirect?error=BANNED_USER");
                         })
                 )
                 // ✨ 핵심: JWT 필터를 UsernamePasswordAuthenticationFilter보다 먼저 실행하게 설정
@@ -103,7 +114,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // 허용할 프론트엔드 주소 (React 기본 포트 3000, Vite 5173 모두 포함)
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173","https://connected-m.vercel.app"));
         // 허용할 HTTP 메서드
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         // 허용할 헤더

@@ -26,8 +26,8 @@ const WishlistPage: React.FC = () => {
         setLoading(true);
         const token = localStorage.getItem('token');
         
-        const response = await axios.get('http://localhost:8080/api/members/wishlist', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/members/wishlist`, {
+            headers: { Authorization: `Bearer ${token}` }
         });
 
         if (response.data) {
@@ -56,8 +56,8 @@ const WishlistPage: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       
-      await axios.post(`http://localhost:8080/api/members/wishlist/${contentId}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/members/wishlist/${contentId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
       });
 
       setWishlist(prev => prev.filter(item => item.contentId !== contentId));

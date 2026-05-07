@@ -54,7 +54,7 @@ const Chatbot = () => {
       const token = localStorage.getItem('token')?.replace(/^['"]|['"]$/g, '');
 
       // 백엔드 API로 사용자의 질문(prompt) 전송
-      const response = await axios.post('http://localhost:8080/api/ai/recommend', { // 명세에 맞는 엔드포인트 사용
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/ai/recommend`, { // 명세에 맞는 엔드포인트 사용
         prompt: userMessageText // DTO 형식에 맞춰 prompt 필드에 메시지 전송
       }, {
         headers: {

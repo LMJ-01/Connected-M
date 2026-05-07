@@ -31,6 +31,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+
+        String referer = request.getHeader("Referer");
+        String baseFrontendUrl = "http://localhost:5173"; // 기본값은 로컬
+
+        if (referer != null && referer.contains("connected-m.vercel.app")) {
+            baseFrontendUrl = "https://connected-m.vercel.app";
+        }
+
         try {
             OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
             Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -73,7 +81,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             boolean needInfo = user.getPhoneNumber() == null || user.getPhoneNumber().equals("010-0000-0000");
             boolean needNickname = user.getNickname() != null && user.getNickname().startsWith("tmp_social_");
 
-            String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:5173/oauth2/redirect")
+            String targetUrl = UriComponentsBuilder.fromUriString(baseFrontendUrl + "/oauth2/redirect")
                     .queryParam("token", accessToken)
                     .queryParam("id", user.getId())
                     .queryParam("email", user.getEmail())
@@ -89,7 +97,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         } catch (Exception e) {
             log.error("소셜 로그인 핸들러 실패!", e);
-            response.sendRedirect("http://localhost:5173/?error=auth_failed");
+            response.sendRedirect(baseFrontendUrl + "/?error=auth_failed");
         }
     }
 }

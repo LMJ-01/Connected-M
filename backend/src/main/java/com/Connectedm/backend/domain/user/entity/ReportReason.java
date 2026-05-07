@@ -10,7 +10,6 @@ public enum ReportReason {
     INAPPROPRIATE_CONTENT("부적절한 내용"),
     ABUSIVE_LANGUAGE("욕설/비하 발언"),
     SPOILER("스포일러 포함"),
-    OTHER("기타 사유");
-
+    OTHER("상세 신고내용");
     private final String description;
 }

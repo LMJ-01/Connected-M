@@ -14,6 +14,9 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
+    private String frontendUrl;
+
     // ✨ UserService에서 호출하는 바로 그 메서드입니다!
     // 파라미터로 이메일(String)과 토큰(String) 두 개를 받습니다.
     public void sendResetLink(String toEmail, String token) {
@@ -24,7 +27,7 @@ public class MailService {
             helper.setFrom("Connected M <dlaudwns0903@gmail.com>");
             helper.setSubject("[Connected M] 비밀번호 재설정 안내");
 
-            String resetUrl = "http://localhost:5173/reset-password?token=" + token;
+            String resetUrl = frontendUrl + "/reset-password?token=" + token;
             String html = "<html><body>" +
                     "<p>안녕하세요. Connected M입니다.</p>" +
                     "<p>비밀번호 재설정을 위해 아래 링크를 클릭해 주세요.</p>" +

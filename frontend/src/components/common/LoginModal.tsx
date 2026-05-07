@@ -25,13 +25,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   };
 
   const handleSocialLogin = (provider: 'kakao' | 'google') => {
-    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/${provider}`;
   };
 
   const handleFindPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/auth/password-reset/request', null, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/password-reset/request`, null, {
         params: { email, realName, phoneNumber }
       });
       alert("입력하신 이메일로 인증 링크를 발송했습니다!");
@@ -45,7 +45,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         email,
         password
       });

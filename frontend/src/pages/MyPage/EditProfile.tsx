@@ -80,7 +80,7 @@ const EditProfile = () => {
         nickname: formData.nickname.trim()
       };
 
-      const response = await axios.put('http://localhost:8080/api/user/update-extra-info', requestData, {
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/user/update-extra-info`, requestData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
