@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar, FaRegStar, FaStarHalfAlt, FaBookmark, FaRegBookmark, FaChevronLeft, FaChevronRight, FaEdit, FaTrashAlt, FaCheck, FaTimes } from 'react-icons/fa';
-import './MovieDetail.css';
+import './Moviedetail.css';
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
 import { PiSirenFill } from "react-icons/pi";
