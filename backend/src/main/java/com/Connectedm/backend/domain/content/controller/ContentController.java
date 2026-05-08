@@ -144,4 +144,10 @@ public class ContentController {
     public ApiResponse<List<ContentSummaryDto>> getAllContents() {
         return ApiResponse.success(contentService.getAllMovies());
     }
+
+    @PostMapping("/temp-save")
+    public ApiResponse<String> saveTempContent(@RequestBody com.Connectedm.backend.domain.content.entity.Content content) {
+    contentService.saveContent(content); // 서비스 레이어의 저장 로직 호출 (메서드명 확인 필요!)
+    return ApiResponse.success("임시 데이터 등록 성공!");
+}
 }
