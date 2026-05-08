@@ -5,15 +5,15 @@
       "destination": "http://34.50.54.141:8080/api/:path*"
     },
     {
-      "source": "/oauth2/:path*",
-      "destination": "http://34.50.54.141:8080/oauth2/:path*"
+      "source": "/oauth2/authorization/:path*",
+      "destination": "http://34.50.54.141:8080/oauth2/authorization/:path*"
     },
     {
       "source": "/login/oauth2/:path*",
       "destination": "http://34.50.54.141:8080/login/oauth2/:path*"
     },
     {
-      "source": "/((?!api|oauth2|login).*)" ,
+      "source": "/((?!api|oauth2/authorization|login).*)" ,
       "destination": "/index.html"
     }
   ]
