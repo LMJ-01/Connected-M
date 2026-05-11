@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios'; // ✨ axios 임포트 추가
 import './App.css';
 
+// 🌟 ngrok 브라우저 경고창 우회 헤더 전역 설정 추가
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
+
 // 컴포넌트 & 페이지 임포트
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
