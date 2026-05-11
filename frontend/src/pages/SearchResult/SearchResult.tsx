@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import './SearchResult.css';
+import axios from 'axios';
 
 const SearchResult = () => {
   const [searchParams] = useSearchParams();
@@ -20,8 +21,8 @@ const SearchResult = () => {
       if (!query) return;
       setLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/search?query=${encodeURIComponent(query)}`);
-        const result = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/search?query=${encodeURIComponent(query)}`);
+        const result = response.data;
         console.log("🚀 백엔드에서 온 데이터:", result);
         if (result.data) {
           const mapped = result.data.map((m: any) => {

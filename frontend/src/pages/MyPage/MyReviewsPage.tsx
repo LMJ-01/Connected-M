@@ -49,7 +49,7 @@ const MyReviewsPage: React.FC = () => {
     const fetchMyReviews = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        navigate('/login');
+        navigate('/');
         return;
       }
       try {

@@ -31,7 +31,7 @@ const EditProfile = () => {
       });
     } else {
       alert('로그인 정보가 없습니다.');
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 

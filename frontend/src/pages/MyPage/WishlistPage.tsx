@@ -21,10 +21,18 @@ const WishlistPage: React.FC = () => {
   const itemsPerPage = 3;
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    // 🌟 토큰이 없으면 홈으로 리다이렉트 시키는 방어 코드 추가
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate('/');
+      return;
+    }
+
     const fetchWishlist = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem('token');
         
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/members/wishlist`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -47,7 +55,7 @@ const WishlistPage: React.FC = () => {
     };
 
     fetchWishlist();
-  }, []);
+  }, [navigate]);
 
   const handleRemove = async (e: React.MouseEvent, contentId: number) => {
     e.stopPropagation();
