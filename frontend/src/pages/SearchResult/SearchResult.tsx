@@ -21,23 +21,28 @@ const SearchResult = () => {
       if (!query) return;
       setLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/search?query=${encodeURIComponent(query)}`);
-        const result = await response.json();
+        // Axios로 요청을 보내고 params로 검색어를 전달합니다.
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/search`, {
+          params: { query }
+        });
+        const result = response.data;
         console.log("🚀 백엔드에서 온 데이터:", result);
-        if (result.data) {
-          const mapped = result.data.map((m: any) => {
-            const genreArray = Array.isArray(m.genres) ? m.genres : [];
-            return {
-              ...m,
-              poster_path: m.poster_path || m.posterpath || m.posterPath || "",
-              id: m.id,
-              overview: m.overview || m.contents_overview || "줄거리 정보가 없습니다.",
-              genreList: genreArray 
-            };
-          });
-          setResults(mapped);
-          setCurrentPage(1); // 검색어가 바뀌면 다시 1페이지로
-        }
+
+        // 🌟 백엔드가 배열 [...]을 바로 주든, { data: [...] }로 감싸서 주든 둘 다 대응하는 안전장치 ㅋ
+        const searchList = Array.isArray(result) ? result : (result.data || []);
+
+        const mapped = searchList.map((m: any) => {
+          const genreArray = Array.isArray(m.genres) ? m.genres : [];
+          return {
+            ...m,
+            poster_path: m.poster_path || m.posterpath || m.posterPath || "",
+            id: m.id,
+            overview: m.overview || m.contents_overview || "줄거리 정보가 없습니다.",
+            genreList: genreArray 
+          };
+        });
+        setResults(mapped);
+        setCurrentPage(1);
       } catch (error) {
         console.error("검색 실패:", error);
       } finally {
