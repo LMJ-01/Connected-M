@@ -10,7 +10,8 @@ const SearchResult = () => {
   
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedGenre, setSelectedGenre] = useState("모든 장르"); // 기본값을 "모든 장르"로 설정
+  const [errorMsg, setErrorMsg] = useState<string | null>(null); // 🌟 백엔드 에러 메시지 저장용 상태
+  const [selectedGenre, setSelectedGenre] = useState("모든 장르"); 
 
   // 페이지네이션을 위한 상태
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,15 +21,25 @@ const SearchResult = () => {
     const fetchSearchResults = async () => {
       if (!query) return;
       setLoading(true);
+      setErrorMsg(null); // 새로운 검색 시 에러 초기화
+      
       try {
-        // Axios로 요청을 보내고 params로 검색어를 전달합니다.
+        // 🌟 axios.get과 params 옵션을 사용하여 이중 인코딩 방지 및 ngrok 우회 적용
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/search`, {
           params: { query }
         });
+        
         const result = response.data;
         console.log("🚀 백엔드에서 온 데이터:", result);
 
-        // 🌟 백엔드가 배열 [...]을 바로 주든, { data: [...] }로 감싸서 주든 둘 다 대응하는 안전장치 ㅋ
+        // Case 1: 백엔드가 { success: false, ... } 형태의 에러 응답을 보낸 경우
+        if (result && result.success === false) {
+          setErrorMsg(result.message || "서버에서 오류 데이터를 반환했습니다.");
+          setResults([]);
+          return;
+        }
+
+        // Case 2: 백엔드가 데이터를 정상적으로 보낸 경우 (배열 직접 반환 vs { data: [...] } 감싸서 반환 둘 다 대응)
         const searchList = Array.isArray(result) ? result : (result.data || []);
 
         const mapped = searchList.map((m: any) => {
@@ -41,10 +52,15 @@ const SearchResult = () => {
             genreList: genreArray 
           };
         });
+
         setResults(mapped);
-        setCurrentPage(1);
-      } catch (error) {
+        setCurrentPage(1); // 검색어가 바뀌면 다시 1페이지로
+      } catch (error: any) {
         console.error("검색 실패:", error);
+        // 🌟 500 에러 등 서버 연결 자체가 실패한 경우 에러 메시지 세팅
+        const serverErrorMsg = error.response?.data?.message || "서버와 연결할 수 없거나 내부 오류(500)가 발생했습니다.";
+        setErrorMsg(serverErrorMsg);
+        setResults([]);
       } finally {
         setLoading(false);
       }
@@ -106,6 +122,13 @@ const SearchResult = () => {
 
         {loading ? (
           <div className="loading-message">정보를 가져오는 중...</div>
+        ) : errorMsg ? (
+          // 🌟 백엔드 에러 발생 시 출력할 에러 뷰
+          <div className="search-error-message">
+            <p className="error-title">⚠️ 검색 오류 발생</p>
+            <p className="error-desc">{errorMsg}</p>
+            <p className="error-action">백엔드 콘솔의 에러 로그(Exception)를 확인해주세요.</p>
+          </div>
         ) : currentItems.length > 0 ? (
           <>
             <div className="search-list-wrapper">
