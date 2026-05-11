@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import { IoIosTimer } from "react-icons/io";
+import axios from 'axios';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -49,8 +50,8 @@ const Home = () => {
   useEffect(() => {
     const loadHeroMovies = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/random`);
-        const result = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/random`);
+        const result = response.data;
         if (result.data && result.data.length > 0) {
           const mapped = result.data.map((m: any) => ({
             ...m,
@@ -69,8 +70,8 @@ const Home = () => {
   useEffect(() => {
     const loadGenreMovies = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/category?genreId=${activeGenre}&limit=10`);
-        const result = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/category?genreId=${activeGenre}&limit=10`);
+        const result = response.data;
         if (result.data) {
           const mapped = result.data.map((m: any) => ({
             ...m,
