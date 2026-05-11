@@ -21,10 +21,8 @@ const SearchResult = () => {
       if (!query) return;
       setLoading(true);
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/search`, {
-          params: { query }
-        });
-        const result = response.data;
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/search?query=${encodeURIComponent(query)}`);
+        const result = await response.json();
         console.log("🚀 백엔드에서 온 데이터:", result);
         if (result.data) {
           const mapped = result.data.map((m: any) => {
