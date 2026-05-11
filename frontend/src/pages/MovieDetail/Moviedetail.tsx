@@ -184,8 +184,8 @@ const handleReportSubmit = async () => {
         setLoading(true);
         const token = localStorage.getItem('token'); 
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contents/${id}`);
-        const result = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/contents/${id}`);
+        const result = response.data;
 
         if (result && result.data) {
           const data = result.data;

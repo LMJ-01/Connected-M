@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './KeywordPage.css';
+import axios from 'axios';
 
 // 🚀 백엔드 DTO와 일치하도록 인터페이스 유지
 interface MovieData {
@@ -36,8 +37,8 @@ const KeywordPage: React.FC = () => {
           fetch(`${import.meta.env.VITE_API_URL}/api/ai/keywords`)
         ]);
 
-        const mainJson = await mainRes.json();
-        const aiData = await aiRes.json();
+        const mainJson = mainRes.data;
+        const aiData = aiRes.data;
 
         // 🚀 211개 데이터를 모두 가져오기 위해 리스트 참조 (데이터 구조 유지)
         const mainList = mainJson.data;
