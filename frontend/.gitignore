@@ -22,9 +22,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-
-.env
-=======
 .env*
->>>>>>> bd7f4acfec5d5fb6b9286043c7fbc95011a72f7a
