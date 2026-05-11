@@ -111,7 +111,10 @@ const MyPage: React.FC = () => {
           setIsAdmin(true);
         }
         
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/${userId}`);
+        const token = localStorage.getItem('token'); // 토큰 가져오기 추가
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` } // 헤더에 토큰 추가
+        });
         const serverUserData = response.data.data;
         setUser(serverUserData);
 
